@@ -11,8 +11,10 @@ let X, Y;
 let countDogs, countCats;
 let dogs = [];
 let cats = [];
+let house, cat, dog = [];
 let htmlDogsArr = '';
 let htmlCatsArr = '';
+let itemX, itemY;
 
 //розмір ігрового поля
 console.log('Поле:', elPlayBoard.clientHeight, elPlayBoard.clientWidth);
@@ -27,6 +29,9 @@ const randCoord = (itemLnk) => {
 //функція, щоб відмалювати об'єкт, який зустрічається на полі єдиний раз
 const renderItem = (itemLnk) => {
     randCoord(itemLnk);
+    console.log('house', X, Y);
+    itemX = X;
+    itemY = Y;
     itemLnk.style.left = `${X}px`;
     itemLnk.style.top = `${Y}px`;
 }
@@ -75,12 +80,12 @@ const renderDogs = () => {
         return _html;
     }).join(' ');  
     
-    console.log(htmlDogsArr);
+    //console.log('масив собак для html:', htmlDogsArr);
     
-    //elPlayBoard.insertAdjacentHTML = ('afterbegin', 'htmlDogsArr');
+    elPlayBoard.insertAdjacentHTML('afterbegin', htmlDogsArr);
     //console.log(elPlayBoard.innerHTML);
 
-    elPlayBoard.innerHTML = htmlDogsArr;
+    //elPlayBoard.innerHTML = htmlDogsArr;
 };
 
 const renderCats = () => {
@@ -89,24 +94,22 @@ const renderCats = () => {
         return _html;
     }).join(' ');
     
-    console.log(htmlCatsArr);
+    //console.log(htmlCatsArr);
 
-    //elPlayBoard.insertAdjacentHTML = ('beforeend', 'htmlCatsArr');
+    elPlayBoard.insertAdjacentHTML('beforeend', htmlCatsArr);
     //console.log(elPlayBoard.innerHTML);
 
-    elPlayBoard.innerHTML = htmlCatsArr;
+    //elPlayBoard.innerHTML = htmlCatsArr;
 };
 
 renderItem(elHouse);
-//renderItem(elCat);
-
 
 elBtnGo.addEventListener('click', () => {
+    elPlayBoard.innerHTML = '';
+    renderItem(elHouse);
     renderCats();  
-    console.log('кішки:', htmlCatsArr);
     renderDogs();
-    console.log('собаки:', htmlDogsArr);
-    //elPlayBoard.innerHTML = `${htmlDogsArr}${htmlCatsArr}`;
+    
 })
 
 
