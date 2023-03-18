@@ -63,7 +63,7 @@ const renderCats = () => {
 
 elCountDogs.addEventListener('change', (ev) => {
     countDogs = ev.target.value;
-    for(let i=1; i<=countDogs; i=i+1) {
+    for(let i=1; i<countDogs; i=i+1) {
         randCoord(elDog);
         let dogX = X;
         let dogY = Y;
@@ -75,7 +75,7 @@ elCountDogs.addEventListener('change', (ev) => {
 
 elCountCats.addEventListener('change', (ev) => {
     countCats = ev.target.value;
-    for(let i=1; i<=countCats; i=i+1) {
+    for(let i=1; i<countCats; i=i+1) {
         randCoord(elCat);
         let catX = X;
         let catY = Y;
