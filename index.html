@@ -10,33 +10,37 @@
 </head>
 <body>
     <div class="wrap">
-        <div class="hello">
-            <h1>Відведи собаку додому!</h1>
-            <h2>(тицяй на цуценя)</h2>
-            Обери кількість собак на подвір'ї:
-                <select class="countDogs">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                </select>
-            А скільки кішок їм заважатимуть?
-            <select class="countCats">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-            </select>  
-            <button type="button" name="btnPush">GO!</button>
-        </div>
         <div class="board">
+            <div class="hello"><h1>Ти у грі "Відведи собаку додому!"</h1>
+                <h2>Правила:</h2>
+                <h3>Собака переміщується по діагоналі в залежності від того, на яку чверть її зображення клікнути.</h3>
+                <h3>Мета: завести собак(у) до будиночка.</h3>
+                <h3>Перешкода: якщо собака натикається на кішку, гру закінчено, Ви програли.</h3>
+                <div>
+                    Обери кількість собак на подвір'ї:
+                        <select class="countDogs">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                        </select>
+                    А скільки кішок їм заважатимуть?
+                    <select class="countCats">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                    </select>  
+                    <button type="button" name="btnPush">GO!</button>
+                </div>
+            </div>
             <div class="house"></div>
-            <div class="dog"></div>
             <div class="cat"></div>
+            <div class="dog"></div>
         </div>
     </div>
     <script src="./js/main.js"></script>

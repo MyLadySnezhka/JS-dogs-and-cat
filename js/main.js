@@ -8,13 +8,15 @@ const elCountCats = document.querySelector('select[class=countCats]');
 const elBtnGo = document.querySelector('button[name=btnPush]');
 
 let X, Y;
+let catID, catX, catY;
 let countDogs, countCats;
+let cats = [{catID, catX, catY}];
 let dogs = [];
-let cats = [];
 //let house, cat, dog = [];
 let htmlDogsArr = '';
 let htmlCatsArr = '';
 let itemX, itemY;
+let houseX, houseY;
 
 //розмір ігрового поля
 console.log('Поле:', elPlayBoard.clientHeight, elPlayBoard.clientWidth);
@@ -29,17 +31,30 @@ const randCoord = (itemLnk) => {
 //функція, щоб відмалювати об'єкт, який зустрічається на полі єдиний раз
 const renderItem = (itemLnk) => {
     randCoord(itemLnk);
-    console.log('house', X, Y);
+    console.log('item rand', X, Y);
     itemX = X;
     itemY = Y;
     itemLnk.style.left = `${X}px`;
     itemLnk.style.top = `${Y}px`;
-}  
+}
 
-    // itemLnk.style.left = `${X}px`;          
-    // itemLnk.style.top = `${Y}px`;
-    //або можна ще так:
-    //lnkItem.style.transform = `translate(${X}px, ${Y}px)`;}
+const renderHouse = () => {
+    randCoord(elHouse);
+    console.log('House', X, Y);
+    houseX = X;
+    houseY = Y;
+    elHouse.style.left = `${X}px`;
+    elHouse.style.top = `${Y}px`;
+}
+
+const renderStart = () => {
+    elDog.style.left = '15%';
+    elDog.style.top = '50vh';
+    elHouse.style.left = '40%';
+    elHouse.style.top = '50vh';
+    elCat.style.left = '75%';
+    elCat.style.top = '50vh';
+}
 
 const renderDogs = () => {
     const htmlDogsArr = dogs.map((item) => {
@@ -61,7 +76,11 @@ const renderCats = () => {
     //elPlayBoard.innerHTML = htmlCatsArr;
 };
 
+renderStart();
+
 elCountDogs.addEventListener('change', (ev) => {
+    i = 1;
+    dogs = [];
     countDogs = ev.target.value;
     for(let i=1; i<countDogs; i=i+1) {
         randCoord(elDog);
@@ -74,25 +93,34 @@ elCountDogs.addEventListener('change', (ev) => {
 });
 
 elCountCats.addEventListener('change', (ev) => {
+    j = 1;
+    cats = [];
+    // cats[0].catX = elCat.style.left;
+    // cats[0].catY = elCat.style.top;
     countCats = ev.target.value;
-    for(let i=1; i<countCats; i=i+1) {
+    for(let j=1; j<countCats; ) {
         randCoord(elCat);
         let catX = X;
         let catY = Y;
-        let catID = i;
-        cats.push({catID, catX, catY});
+        let catID = j;
+        if ((cats[j].catX!=cats[j-1].catX)&&(cats[j].catY!=cats[j-1].catY)) {
+            cats.push({catID, catX, catY})
+            j = j+1};
     }
     console.log('cat', cats);
 });
 
 elBtnGo.addEventListener('click', () => {
     
-    renderItem(elHouse);
+    renderHouse();
     renderCats();  
     renderDogs();
     elHelloText.style.display = 'none';
     
 })
+
+//альтернатива для переміщення:
+//lnkItem.style.transform = `translate(${X}px, ${Y}px)`;}
 
 elPlayBoard.addEventListener('click', (ev) => {
     if(ev.target.classList.value != 'board') {
