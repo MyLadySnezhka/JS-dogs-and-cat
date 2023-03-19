@@ -6,6 +6,7 @@ const elHelloText = document.querySelector('.hello');
 const elCountDogs = document.querySelector('select[class=countDogs]');
 const elCountCats = document.querySelector('select[class=countCats]');
 const elBtnGo = document.querySelector('button[name=btnPush]');
+const gameOverText = document.querySelector('.atCat');
 
 let catID, catX, catY;
 let countDogs, countCats;
@@ -25,8 +26,8 @@ const borderY = elPlayBoard.clientHeight;
 console.log('Поле:', borderX, borderY);
 
 const randCoord = (itemLnk) => {
-    let maxX = elPlayBoard.clientWidth - itemLnk.clientWidth;
-    let maxY = elPlayBoard.clientHeight - itemLnk.clientHeight;
+    let maxX = borderX - itemLnk.clientWidth;
+    let maxY = borderY - itemLnk.clientHeight;
     X = Math.floor(Math.random()*maxX);
     Y = Math.floor(Math.random()*maxY);
 }
@@ -45,17 +46,18 @@ const renderHouse = () => {
     randCoord(elHouse);
     houseX = X;
     houseY = Y;
+    console.log('house', houseX, houseY);
     const _html = `<div class="house" style="left: ${houseX}px; top: ${houseY}px;"></div>`;
-    elPlayBoard.insertAdjacentHTML('beforeend', _html);
+    elPlayBoard.insertAdjacentHTML('afterbegin', _html);
 }
 
 const renderStart = () => {
     elDog.style.left = '15%';
-    elDog.style.top = '50vh';
+    elDog.style.top = '13vh';
     elHouse.style.left = '43%';
-    elHouse.style.top = '50vh';
+    elHouse.style.top = '10vh';
     elCat.style.left = '75%';
-    elCat.style.top = '50vh';
+    elCat.style.top = '15vh';
 }
 
 const renderDogs = () => {
@@ -90,7 +92,7 @@ elCountDogs.addEventListener('change', (ev) => {
         let dogID = i;
         dogs.push({dogID, dogX, dogY});  
     }
-    console.log('dog', dogs);
+//    console.log('dog', dogs);
 });
 
 elCountCats.addEventListener('change', (ev) => {
@@ -107,16 +109,16 @@ elCountCats.addEventListener('change', (ev) => {
         //     cats.push({catID, catX, catY});
         //     j = j+1};
     }
-    console.log('cat', cats);
+    //console.log('cat', cats);
 });
-
-
 
 elBtnGo.addEventListener('click', () => {
     elHelloText.style.display = 'none';    
     renderHouse();     
-    renderCats();  
     renderDogs();
+    console.log('dog', dogs);
+    renderCats();  
+    console.log('cat', cats);
 })
 
 elPlayBoard.addEventListener('click', (ev) => {
@@ -132,14 +134,13 @@ elPlayBoard.addEventListener('click', (ev) => {
         yDown = yTop + yHeight;
         xMid = xLeft + xWidth/2;
         yMid = yTop + yHeight/2;
-        console.dir(ev.target);
-        console.log('собакатыкX', xLeft, xMid, xRight);
-        console.log('собакатыкY', yTop, yMid, yDown);
+        // console.dir(ev.target);
+        // console.log('собакатыкX', xLeft, xMid, xRight);
+        // console.log('собакатыкY', yTop, yMid, yDown);
 
         let mouseX = ev.pageX;
         let mouseY = ev.pageY;
-        console.log('мыша:', mouseX, mouseY);
-        
+                
         if((mouseX>xLeft)&&(mouseX<xMid)&&(mouseY>yTop)&&(mouseY<yMid)) {
             console.log('верхний левый угол', xLeft, xMid, yTop, yMid);
             xNew = xLeft + xWidth/2;
@@ -177,16 +178,22 @@ elPlayBoard.addEventListener('click', (ev) => {
             ev.target.style.left = `${xLeft}px`;
             ev.target.style.top = `${yTop}px`;
 
-            console.log('house', houseX, houseY);
-
         //чи зайшов додому    
         if((xLeft>=houseX-50)&&(xLeft<=houseX+80)&&(yTop>=houseY-50)&&(yTop<=houseY+120)) {
             elPlayBoard.innerHTML = `<span class="atHome">Вітаю, цуценя вдома!<br>Якщо хочеш зіграти ще, онови сторінку.</span>`;
-        }    
+        }; 
+        
+        //чи натрапив на кота
+        cats.map ((item) => {
+            console.log(item.catX, item.catY);
+            if((xLeft>=item.catX-50)&&(xLeft<=item.catX+160)&&(yTop>=item.catY-50)&&(yTop<=item.catY+160)) {
+                elPlayBoard.innerHTML = `<span class="atCat">МЯУ!!!<br>Не треба ображати кицьку!!!<br><br>Якщо хочеш зіграти ще, онови сторінку.</span>`;
+                //elPlayBoard.classList.add('atCat');
+                //gameOverText.style.display = 'block'; //перемикнути в scss на none
+            }
+        })
     }
 });
-
-
 
 //const game = () => {
     // renderDogs(elDog);
