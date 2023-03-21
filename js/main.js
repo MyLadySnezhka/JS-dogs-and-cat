@@ -45,15 +45,6 @@ const renderItem = (itemLnk) => {
     itemLnk.style.top = `${Y}px`;
 }
 
-const renderHouse = () => {
-    randCoord(elHouse);
-    houseX = X;
-    houseY = Y;
-    elHouse.style.left = `${houseX}px`; 
-    elHouse.style.top = `${houseY}px`;  
-    elPlayBoard.insertAdjacentHTML('afterbegin', '<div class="house"></div>');
-}
-
 const renderStart = () => {
     elDog.style.left = '15%';
     elDog.style.top = '13vh';
@@ -61,6 +52,16 @@ const renderStart = () => {
     elHouse.style.top = '10vh';
     elCat.style.left = '75%';
     elCat.style.top = '15vh';
+}
+
+const renderHouse = () => {
+    randCoord(elHouse);
+    houseX = X;
+    houseY = Y;
+    // elHouse.style.left = `${houseX}px`; 
+    // elHouse.style.top = `${houseY}px`;  
+    _html = `<div class="house" style="left: ${houseX}px; top: ${houseY}px;"></div>`;
+    elPlayBoard.insertAdjacentHTML('afterbegin', _html);
 }
 
 const renderDogs = () => {
@@ -118,7 +119,7 @@ elCountCats.addEventListener('change', (ev) => {
 elBtnGo.addEventListener('click', () => {
     elHelloText.style.display = 'none'; 
     renderHouse(elHouse);  
-    console.log('house', houseX, houseY);
+    console.log('house', houseX, houseY, elHouse.style.left, elHouse.style.top);
     renderCats();  
     console.log('cat', cats);
     renderDogs();
