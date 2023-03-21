@@ -45,12 +45,13 @@ const renderItem = (itemLnk) => {
     itemLnk.style.top = `${Y}px`;
 }
 
-const renderHouse = (itemLnk) => {
-    randCoord(itemLnk);
+const renderHouse = () => {
+    randCoord(elHouse);
     houseX = X;
     houseY = Y;
-    const _html = `<div class="house" style="left: ${houseX}px; top: ${houseY}px;"></div>`;
-    elPlayBoard.insertAdjacentHTML('afterbegin', _html);
+    elHouse.style.left = `${houseX}px`; 
+    elHouse.style.top = `${houseY}px`;  
+    elPlayBoard.insertAdjacentHTML('afterbegin', '<div class="house"></div>');
 }
 
 const renderStart = () => {
@@ -68,7 +69,7 @@ const renderDogs = () => {
         return _html;
     }).join(' ');  
        
-    elPlayBoard.insertAdjacentHTML('afterbegin', htmlDogsArr);
+    elPlayBoard.insertAdjacentHTML('beforeend', htmlDogsArr);
     //elPlayBoard.innerHTML = htmlDogsArr;
 };
 
@@ -78,7 +79,7 @@ const renderCats = () => {
         return _html;
     }).join(' ');
     
-    elPlayBoard.insertAdjacentHTML('beforeend', htmlCatsArr);
+    elPlayBoard.insertAdjacentHTML('afterbegin', htmlCatsArr);
     //elPlayBoard.innerHTML = htmlCatsArr;
 };
 
@@ -115,13 +116,14 @@ elCountCats.addEventListener('change', (ev) => {
 });
 
 elBtnGo.addEventListener('click', () => {
-    elHelloText.style.display = 'none';    
+    elHelloText.style.display = 'none'; 
     renderHouse(elHouse);  
     console.log('house', houseX, houseY);
-    renderDogs();
-    console.log('dog', dogs);
     renderCats();  
     console.log('cat', cats);
+    renderDogs();
+    console.log('dog', dogs);
+    console.log(elPlayBoard);
 })
 
 elPlayBoard.addEventListener('click', (ev) => {
@@ -180,16 +182,13 @@ elPlayBoard.addEventListener('click', (ev) => {
 
         //чи зайшов додому    
         if((xLeft>=houseX-50)&&(xLeft<=houseX+80)&&(yTop>=houseY-50)&&(yTop<=houseY+120)) {
-            console.log('Залишилося:', countDogs);
             //elPlayBoard.innerHTML = `<span class="atHome">Вітаю, цуценя вдома!<br>Якщо хочеш зіграти ще, онови сторінку.</span>`;
             ev.target.style.display = 'none';
             countDogs = countDogs - 1;
-            console.log('Залишилося собак:', countDogs);
             if (countDogs===0) {
                 gameOverOK.classList.add('show');
                 elGameOver.classList.add('shadow');
             }
-            console.log('Залишилося чи ні:', countDogs);
         }; 
         
         //чи натрапив на кота
