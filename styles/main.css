@@ -40,7 +40,15 @@
   padding: 15px;
 }
 
+.gameover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .atHome {
+  display: none;
+  width: 60%;
   background-color: orange;
   border: 5px double blue;
   padding: 20px;
@@ -49,15 +57,26 @@
 }
 
 .atCat {
-  width: 600px;
-  min-height: 210px;
+  display: none;
+  width: 60%;
   background-color: rgb(106, 6, 6);
-  border: 5px double orange;
+  border: 3px double orange;
   padding: 20px;
   font-size: 36px;
   text-align: center;
   color: orange;
   position: absolute;
-  left: 30%;
-  top: 35vh;
+}
+
+.show {
+  display: block;
+}
+
+.shadow {
+  background-color: rgba(0, 0, 0, 0.481);
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
 }/*# sourceMappingURL=main.css.map */

@@ -7,6 +7,9 @@ const elCountDogs = document.querySelector('select[class=countDogs]');
 const elCountCats = document.querySelector('select[class=countCats]');
 const elBtnGo = document.querySelector('button[name=btnPush]');
 const gameOverText = document.querySelector('.atCat');
+const gameOverOK = document.querySelector('.atHome');
+const elGameOver = document.querySelector('.gameover');
+
 
 let catID, catX, catY;
 let countDogs, countCats;
@@ -180,16 +183,18 @@ elPlayBoard.addEventListener('click', (ev) => {
 
         //чи зайшов додому    
         if((xLeft>=houseX-50)&&(xLeft<=houseX+80)&&(yTop>=houseY-50)&&(yTop<=houseY+120)) {
-            elPlayBoard.innerHTML = `<span class="atHome">Вітаю, цуценя вдома!<br>Якщо хочеш зіграти ще, онови сторінку.</span>`;
+            //elPlayBoard.innerHTML = `<span class="atHome">Вітаю, цуценя вдома!<br>Якщо хочеш зіграти ще, онови сторінку.</span>`;
+            gameOverOK.classList.add('show');
+            elGameOver.classList.add('shadow');
         }; 
         
         //чи натрапив на кота
         cats.map ((item) => {
             console.log(item.catX, item.catY);
             if((xLeft>=item.catX-50)&&(xLeft<=item.catX+160)&&(yTop>=item.catY-50)&&(yTop<=item.catY+160)) {
-                elPlayBoard.innerHTML = `<span class="atCat">МЯУ!!!<br>Не треба ображати кицьку!!!<br><br>Якщо хочеш зіграти ще, онови сторінку.</span>`;
-                //elPlayBoard.classList.add('atCat');
-                //gameOverText.style.display = 'block'; //перемикнути в scss на none
+                //elPlayBoard.innerHTML = `<span class="atCat">МЯУ!!!<br>Не треба ображати кицьку!!!<br><br>Якщо хочеш зіграти ще, онови сторінку.</span>`;
+                gameOverText.classList.add('show');
+                elGameOver.classList.add('shadow');
             }
         })
     }
