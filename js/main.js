@@ -45,11 +45,10 @@ const renderItem = (itemLnk) => {
     itemLnk.style.top = `${Y}px`;
 }
 
-const renderHouse = () => {
-    randCoord(elHouse);
+const renderHouse = (itemLnk) => {
+    randCoord(itemLnk);
     houseX = X;
     houseY = Y;
-    console.log('house', houseX, houseY);
     const _html = `<div class="house" style="left: ${houseX}px; top: ${houseY}px;"></div>`;
     elPlayBoard.insertAdjacentHTML('afterbegin', _html);
 }
@@ -117,7 +116,8 @@ elCountCats.addEventListener('change', (ev) => {
 
 elBtnGo.addEventListener('click', () => {
     elHelloText.style.display = 'none';    
-    renderHouse();     
+    renderHouse(elHouse);  
+    console.log('house', houseX, houseY);
     renderDogs();
     console.log('dog', dogs);
     renderCats();  
@@ -137,33 +137,30 @@ elPlayBoard.addEventListener('click', (ev) => {
         yDown = yTop + yHeight;
         xMid = xLeft + xWidth/2;
         yMid = yTop + yHeight/2;
-        // console.dir(ev.target);
-        // console.log('собакатыкX', xLeft, xMid, xRight);
-        // console.log('собакатыкY', yTop, yMid, yDown);
 
         let mouseX = ev.pageX;
         let mouseY = ev.pageY;
                 
         if((mouseX>xLeft)&&(mouseX<xMid)&&(mouseY>yTop)&&(mouseY<yMid)) {
-            console.log('верхний левый угол', xLeft, xMid, yTop, yMid);
+            //console.log('верхний левый угол', xLeft, xMid, yTop, yMid);
             xNew = xLeft + xWidth/2;
             yNew = yTop + yHeight/2;
-            console.log('новое положение', xNew, yNew);
+            //console.log('новое положение', xNew, yNew);
         } else if ((mouseX>xMid)&&(mouseX<xRight)&&(mouseY>yTop)&&(mouseY<yMid)) {
-            console.log('верхний правый угол');
+            //console.log('верхний правый угол');
             xNew = xLeft - xWidth/2;
             yNew = yTop + yHeight/2;
-            console.log('новое положение', xNew, yNew);
+            //console.log('новое положение', xNew, yNew);
         } else if ((mouseX>xLeft)&&(mouseX<xMid)&&(mouseY>yMid)&&(mouseY<yDown)) {
-            console.log('нижний левый угол');
+            //console.log('нижний левый угол');
             xNew = xLeft + xWidth/2;
             yNew = yTop - yHeight/2;
-            console.log('новое положение', xNew, yNew);
+            //console.log('новое положение', xNew, yNew);
         } else if ((mouseX>xMid)&&(mouseX<xRight)&&(mouseY>yMid)&&(mouseY<yDown)) {
-            console.log('нижний правый угол');
+            //console.log('нижний правый угол');
             xNew = xLeft - xWidth/2;
             yNew = yTop - yHeight/2;
-            console.log('новое положение', xNew, yNew);
+            //console.log('новое положение', xNew, yNew);
         }
 
         //альтернатива для переміщення:
@@ -183,14 +180,20 @@ elPlayBoard.addEventListener('click', (ev) => {
 
         //чи зайшов додому    
         if((xLeft>=houseX-50)&&(xLeft<=houseX+80)&&(yTop>=houseY-50)&&(yTop<=houseY+120)) {
+            console.log('Залишилося:', countDogs);
             //elPlayBoard.innerHTML = `<span class="atHome">Вітаю, цуценя вдома!<br>Якщо хочеш зіграти ще, онови сторінку.</span>`;
-            gameOverOK.classList.add('show');
-            elGameOver.classList.add('shadow');
+            ev.target.style.display = 'none';
+            countDogs = countDogs - 1;
+            console.log('Залишилося собак:', countDogs);
+            if (countDogs===0) {
+                gameOverOK.classList.add('show');
+                elGameOver.classList.add('shadow');
+            }
+            console.log('Залишилося чи ні:', countDogs);
         }; 
         
         //чи натрапив на кота
         cats.map ((item) => {
-            console.log(item.catX, item.catY);
             if((xLeft>=item.catX-50)&&(xLeft<=item.catX+160)&&(yTop>=item.catY-50)&&(yTop<=item.catY+160)) {
                 //elPlayBoard.innerHTML = `<span class="atCat">МЯУ!!!<br>Не треба ображати кицьку!!!<br><br>Якщо хочеш зіграти ще, онови сторінку.</span>`;
                 gameOverText.classList.add('show');
