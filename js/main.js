@@ -21,6 +21,7 @@ let itemX, itemY;
 let houseX, houseY;
 let X, Y, xNew, yNew;
 let xLeft, yTop, xMid, yMid, xRight, yDown, xWidth, yHeight;
+let itemPlayArr = [];
 
 //розмір ігрового поля
 const borderX = elPlayBoard.clientWidth;
@@ -55,9 +56,15 @@ const renderStart = () => {
 }
 
 const renderHouse = () => {
+    elHouse.style.left = '';
+    elHouse.style.top = '';
     randCoord(elHouse);
     houseX = X;
     houseY = Y;
+    const itemName = 'house';
+    const itemX = X;
+    const itemY = Y;
+    itemPlayArr.push(itemName, itemX, itemY);
     // elHouse.style.left = `${houseX}px`; 
     // elHouse.style.top = `${houseY}px`;  
     _html = `<div class="house" style="left: ${houseX}px; top: ${houseY}px;"></div>`;
@@ -95,6 +102,10 @@ elCountDogs.addEventListener('change', (ev) => {
         let dogY = Y;
         let dogID = i;
         dogs.push({dogID, dogX, dogY});  
+        const itemName = 'dog';
+        const itemX = X;
+        const itemY = Y;
+    itemPlayArr.push(itemName, itemX, itemY);
     }
 //    console.log('dog', dogs);
 });
@@ -112,6 +123,10 @@ elCountCats.addEventListener('change', (ev) => {
         // if ((cats[j].catX=cats[j-1].catX)&&(cats[j].catY=cats[j-1].catY)) {
         //     cats.push({catID, catX, catY});
         //     j = j+1};
+        const itemName = 'cat';
+        const itemX = X;
+        const itemY = Y;
+        itemPlayArr.push(itemName, itemX, itemY);
     }
     //console.log('cat', cats);
 });
@@ -124,14 +139,14 @@ elBtnGo.addEventListener('click', () => {
     console.log('cat', cats);
     renderDogs();
     console.log('dog', dogs);
-    console.log(elPlayBoard);
+    //console.log(elPlayBoard);
+    //console.log(itemPlayArr);
 })
 
 elPlayBoard.addEventListener('click', (ev) => {
-
+    console.log(ev.target.className);
+    //if(ev.target.className='dog') {
     if((ev.target.classList.value!='board')&&(ev.target.className!='house')&&(ev.target.className!='cat')) {
-        //ширина елемента, по якому клікнули
-        //console.log(ev.target.clientWidth);
         xLeft = parseInt(ev.target.style.left);
         yTop = parseInt(ev.target.style.top);
         xWidth = parseInt(ev.target.clientWidth);
