@@ -56,8 +56,8 @@ const renderStart = () => {
 }
 
 const renderHouse = () => {
-    elHouse.style.left = '';
-    elHouse.style.top = '';
+    elHouse.style.left = '0%';
+    elHouse.style.top = '0vh';
     randCoord(elHouse);
     houseX = X;
     houseY = Y;
